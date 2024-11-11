@@ -13,7 +13,7 @@ func NewProductClient(client pb.ProductServiceClient) *ProductClient {
 	return &ProductClient{client: client}
 }
 
-func CreateProduct(clinet *ProductClient) (c *gin.Context) {
+func (clinet *ProductClient) CreateProduct(c *gin.Context) {
 	var product pb.Product
 	if err := c.ShouldBindJSON(&product).Error; err != nil {
 		c.JSON(500, err)
@@ -93,7 +93,7 @@ func (client *ProductClient) CreateCategory(c *gin.Context) {
 	c.JSON(201, res)
 }
 
-func UpdateCategory(client *ProductClient) (c *gin.Context) {
+func (client *ProductClient) UpdateCategory(c *gin.Context) {
 	id := c.Param("id")
 	var body pb.Category
 	if err := c.ShouldBindJSON(&body).Error; err != nil {
@@ -110,7 +110,7 @@ func UpdateCategory(client *ProductClient) (c *gin.Context) {
 	c.JSON(200, res)
 }
 
-func DeleteCategory(client *ProductClient) (c *gin.Context) {
+func (client *ProductClient) DeleteCategory(c *gin.Context) {
 	id := c.Param("id")
 	_, err := client.client.DeleteCategory(c, &pb.CategoryRequest{Id: id})
 	if err != nil {
@@ -121,7 +121,7 @@ func DeleteCategory(client *ProductClient) (c *gin.Context) {
 	c.JSON(200, "Category deleted successfully")
 }
 
-func ListCategories(client *ProductClient) (c *gin.Context) {
+func (client *ProductClient) ListCategories(c *gin.Context) {
 	res, err := client.client.ListCategories(c, &pb.CategoryListRequest{})
 	if err != nil {
 		c.JSON(500, err)
