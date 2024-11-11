@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package product;
+option go_package = "./product";
+
+service ProductService {
+    rpc CreateProduct (Product) returns (ProductResponse);
+    rpc GetProduct (ProductRequest) returns (ProductResponse);
+    rpc UpdateProduct (Product) returns (ProductResponse);
+    rpc DeleteProduct (ProductRequest) returns (ProductResponse);
+    rpc ListProducts (ProductListRequest) returns (ProductListResponse);
+
+    rpc CreateCategory (Category) returns (CategoryResponse);
+    rpc GetCategory (CategoryRequest) returns (CategoryResponse);
+    rpc UpdateCategory (Category) returns (CategoryResponse);
+    rpc DeleteCategory (CategoryRequest) returns (CategoryResponse);
+    rpc ListCategories (CategoryListRequest) returns (CategoryListResponse);
+}
+
+message Product {
+    string id = 1;
+    string name = 2;
+    double price = 3;
+    string category_id = 4;
+}
+
+message Category {
+    string id = 1;
+    string name = 2;
+}
+
+message ProductRequest {
+    string id = 1;
+}
+
+message ProductResponse {
+    Product product = 1;
+}
+
+message ProductListRequest {
+    uint32 page = 1;
+    uint32 page_size = 2;
+}
+
+message ProductListResponse {
+    repeated Product products = 1;
+    repeated Category categories = 2;
+}
+
+message CategoryRequest {
+    string id = 1;
+}
+
+message CategoryResponse {
+    Category category = 1;
+}
+
+message CategoryListRequest {
+    uint32 page = 1;
+    uint32 page_size = 2;
+}
+
+message CategoryListResponse {
+    repeated Category categories = 1;
+}
